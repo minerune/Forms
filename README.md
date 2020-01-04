@@ -73,6 +73,77 @@ class MySimpleForm extends SimpleForm{
 $player->sendForm(new MySimpleForm());
 ```
 
+### Paginated Form
+These are simple forms that provide an interface for creating simple forms with pages.
+```php
+class MyPaginatedForm extends PaginatedForm{
+
+	private const ENTRIES_PER_PAGE = 10;
+
+	/** @var int */
+	private $total_players;
+
+	/** @var string[] */
+	private $people_to_avoid = [];
+
+	public function __construct(int $current_page = 1){
+		$players = Server::getInstance()->getOnlinePlayers();
+		$this->total_players = count($players);
+		
+		foreach(array_slice(
+			$players,
+			($current_page - 1) * self::ENTRIES_PER_PAGE,
+			self::ENTRIES_PER_PAGE
+		) as $player){
+			$this->people_to_avoid[] = $player->getName();
+		}
+		
+		// Call parent::__construct() at the end.
+		parent::__construct(
+			"List of people to avoid" // <- title
+			"Avoid talking with or being in the vicinity of these people." // <- content
+			$current_page // <- current page, defaults to 1 (pages start at 1, not 0)
+		);
+	}
+	
+	protected function getPreviousButton() : Button{
+		return new Button("<- Go back");
+	}
+	
+	protected function getNextButton() : Button{
+		return new Button("Next Page ->");
+	}
+	
+	protected function getPages() : int{
+		// Returns the maximum number of pages.
+		// This will alter the visibility of previous and next buttons.
+		// For example:
+		//   * If we are on page 7 of 7, the "next" button wont be visible
+		//   * If we are on page 6 of 7, the "next" and "previous" button WILL be visible
+		//   * If we are on page 1 of 7, the "previous" button won't be visible
+		return (int) ceil(count($this->total_players) / self::ENTRIES_PER_PAGE);
+	}
+	
+	protected function populatePage() : void{
+		// populate this page with buttons
+		foreach($this->people_to_avoid as $people){
+			$this->addButton(new Button($people, "- Responsible for limiting PhotoTransferPacket to edu only"));
+		}
+	}
+	
+	protected function sendPreviousPage(Player $player) : void{
+		$player->sendForm(new self($this->current_page - 1));
+	}
+	
+	protected function sendNextPage(Player $player) : void{
+		$player->sendForm(new self($this->current_page + 1));
+	}
+}
+
+$player->sendForm(new MyPaginatedForm());
+```
+
+
 ### Custom Form
 Unlike the other two forms, this form lets players enter a custom input. At the bottom of this form is a "Submit" button. No, you
 cannot modify that button's text.
@@ -163,4 +234,6 @@ class MyCustomForm extends CustomForm{
 		// when player closes this form
 	}
 }
+
+$player->sendForm(new MyCustomForm());
 ```
