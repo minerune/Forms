@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace cosmicpe\form\entries\custom;
 
-final class InputEntry implements CustomFormEntry{
+use cosmicpe\form\entries\ModifyableEntry;
+use InvalidArgumentException;
+
+final class InputEntry implements CustomFormEntry, ModifyableEntry{
 
 	/** @var string */
 	private $title;
@@ -27,6 +30,20 @@ final class InputEntry implements CustomFormEntry{
 
 	public function getDefault() : ?string{
 		return $this->default;
+	}
+
+	public function getValue() : string{
+		return $this->default;
+	}
+
+	public function setValue($value) : void{
+		$this->default = $value;
+	}
+
+	public function validateUserInput($input) : void{
+		if(!is_string($input)){
+			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
+		}
 	}
 
 	public function jsonSerialize() : array{

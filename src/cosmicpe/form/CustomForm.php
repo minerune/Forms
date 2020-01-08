@@ -6,6 +6,7 @@ namespace cosmicpe\form;
 
 use Closure;
 use cosmicpe\form\entries\custom\CustomFormEntry;
+use cosmicpe\form\entries\ModifyableEntry;
 use cosmicpe\form\types\Icon;
 use Exception;
 use pocketmine\form\FormValidationException;
@@ -56,6 +57,10 @@ abstract class CustomForm implements Form{
 			try{
 				foreach($data as $key => $value){
 					if(isset($this->entry_listeners[$key])){
+						$entry = $this->entries[$key];
+						if($entry instanceof ModifyableEntry){
+							$entry->validateUserInput($value);
+						}
 						$this->entry_listeners[$key]($player, $this->entries[$key], $value);
 					}
 				}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace cosmicpe\form\entries\custom;
 
 use cosmicpe\form\entries\ModifyableEntry;
+use InvalidArgumentException;
 
 final class SliderEntry implements CustomFormEntry, ModifyableEntry{
 
@@ -37,6 +38,12 @@ final class SliderEntry implements CustomFormEntry, ModifyableEntry{
 
 	public function setValue($value) : void{
 		$this->default = $value;
+	}
+
+	public function validateUserInput($input) : void{
+		if(!is_float($input) || $input > $this->maximum || $input < $this->minimum){
+			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
+		}
 	}
 
 	public function jsonSerialize() : array{

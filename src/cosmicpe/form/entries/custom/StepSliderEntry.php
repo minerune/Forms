@@ -7,6 +7,7 @@ namespace cosmicpe\form\entries\custom;
 use ArgumentCountError;
 use cosmicpe\form\entries\ModifyableEntry;
 use Ds\Set;
+use InvalidArgumentException;
 
 final class StepSliderEntry implements CustomFormEntry, ModifyableEntry{
 
@@ -30,6 +31,12 @@ final class StepSliderEntry implements CustomFormEntry, ModifyableEntry{
 
 	public function setValue($value) : void{
 		$this->setDefault($value);
+	}
+
+	public function validateUserInput($input) : void{
+		if(!is_int($input) || $input < 0 || $input >= $this->steps->count()){
+			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
+		}
 	}
 
 	public function setDefault(string $default_step) : void{

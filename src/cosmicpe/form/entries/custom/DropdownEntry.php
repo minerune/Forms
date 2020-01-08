@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace cosmicpe\form\entries\custom;
 
-use ArgumentCountError;
 use cosmicpe\form\entries\ModifyableEntry;
 use Ds\Set;
+use InvalidArgumentException;
 
 final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 
@@ -32,6 +32,12 @@ final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 		$this->setDefault($value);
 	}
 
+	public function validateUserInput($input) : void{
+		if(!is_int($input) || !isset($this->options[$input])){
+			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
+		}
+	}
+
 	public function setDefault(string $default_option) : void{
 		foreach($this->options as $index => $option){
 			if($option === $default_option){
@@ -40,7 +46,7 @@ final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 			}
 		}
 
-		throw new ArgumentCountError("Option \"" . $default_option . "\" does not exist!");
+		throw new InvalidArgumentException("Option \"" . $default_option . "\" does not exist!");
 	}
 
 	public function jsonSerialize() : array {
