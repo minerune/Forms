@@ -1,0 +1,12 @@
+{
+	"name": "minerune/forms",
+	"description": "A library for PocketMine-MP providing an API to create forms.",
+	"type": "library",
+	"autoload": {
+		"psr-4": {
+			"": [
+				"src"
+			]
+		}
+	}
+}
