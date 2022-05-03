@@ -9,20 +9,11 @@ use InvalidArgumentException;
 
 final class SliderEntry implements CustomFormEntry, ModifyableEntry{
 
-	/** @var string */
-	private $title;
-
-	/** @var float */
-	private $minimum;
-
-	/** @var float */
-	private $maximum;
-
-	/** @var float */
-	private $step;
-
-	/** @var float */
-	private $default;
+	private string $title;
+	private float $minimum;
+	private float $maximum;
+	private float $step;
+	private float $default;
 
 	public function __construct(string $title, float $minimum, float $maximum, float $step = 0.0, float $default = 0.0){
 		$this->title = $title;
@@ -40,7 +31,7 @@ final class SliderEntry implements CustomFormEntry, ModifyableEntry{
 		$this->default = $value;
 	}
 
-	public function validateUserInput($input) : void{
+	public function validateUserInput(mixed $input) : void{
 		if(!is_float($input) || $input > $this->maximum || $input < $this->minimum){
 			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
 		}

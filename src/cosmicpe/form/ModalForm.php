@@ -8,17 +8,10 @@ use pocketmine\player\Player;
 
 abstract class ModalForm implements Form{
 
-	/** @var string */
-	private $title;
-
-	/** @var string|null */
-	private $content;
-
-	/** 2var string */
-	private $first_button = "";
-
-	/** @var string|null */
-	private $second_button;
+	private string $title;
+	private ?string $content;
+	private string $first_button = "";
+	private ?string $second_button;
 
 	public function __construct(string $title, ?string $content = null){
 		$this->title = $title;

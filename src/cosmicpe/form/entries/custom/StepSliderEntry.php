@@ -6,23 +6,18 @@ namespace cosmicpe\form\entries\custom;
 
 use ArgumentCountError;
 use cosmicpe\form\entries\ModifyableEntry;
-use Ds\Set;
 use InvalidArgumentException;
 
 final class StepSliderEntry implements CustomFormEntry, ModifyableEntry{
 
-	/** @var string */
-	private $title;
+	private string $title;
+	/** @var array<string> */
+	private array $steps;
+	private int $default = 0;
 
-	/** @var Set<string> */
-	private $steps;
-
-	/** @var int */
-	private $default = 0;
-
-	public function __construct(string $title, string ...$steps){
+	public function __construct(string $title, array $steps){
 		$this->title = $title;
-		$this->steps = new Set($steps);
+		$this->steps = $steps;
 	}
 
 	public function getValue() : string{
@@ -33,8 +28,8 @@ final class StepSliderEntry implements CustomFormEntry, ModifyableEntry{
 		$this->setDefault($value);
 	}
 
-	public function validateUserInput($input) : void{
-		if(!is_int($input) || $input < 0 || $input >= $this->steps->count()){
+	public function validateUserInput(mixed $input) : void{
+		if(!is_int($input) || $input < 0 || $input >= count($this->steps)){
 			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
 		}
 	}
@@ -50,7 +45,7 @@ final class StepSliderEntry implements CustomFormEntry, ModifyableEntry{
 		throw new ArgumentCountError("Step \"" . $default_step . "\" does not exist!");
 	}
 
-	public function jsonSerialize() : array {
+	public function jsonSerialize() : array{
 		return [
 			"type" => "step_slider",
 			"text" => $this->title,

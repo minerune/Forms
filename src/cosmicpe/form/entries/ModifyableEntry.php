@@ -16,5 +16,5 @@ interface ModifyableEntry{
 	 * @param mixed $input
 	 * @throws InvalidArgumentException
 	 */
-	public function validateUserInput($input) : void;
+	public function validateUserInput(mixed $input) : void;
 }

@@ -12,17 +12,12 @@ use pocketmine\player\Player;
 
 abstract class SimpleForm implements Form{
 
-	/** @var string */
-	private $title;
-
-	/** @var string|null */
-	private $content;
-
+	private string $title;
+	private ?string $content;
 	/** @var Button[] */
-	private $buttons = [];
-
+	private array $buttons = [];
 	/** @var Closure[] */
-	private $button_listeners = [];
+	private array $button_listeners = [];
 
 	public function __construct(string $title, ?string $content = null){
 		$this->title = $title;

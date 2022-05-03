@@ -9,11 +9,8 @@ use InvalidArgumentException;
 
 final class ToggleEntry implements CustomFormEntry, ModifyableEntry{
 
-	/** @var string */
-	private $title;
-
-	/** @var bool */
-	private $default;
+	private string $title;
+	private bool $default;
 
 	public function __construct(string $title, bool $default = false){
 		$this->title = $title;
@@ -28,7 +25,7 @@ final class ToggleEntry implements CustomFormEntry, ModifyableEntry{
 		$this->default = $value;
 	}
 
-	public function validateUserInput($input) : void{
+	public function validateUserInput(mixed $input) : void{
 		if(!is_bool($input)){
 			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
 		}

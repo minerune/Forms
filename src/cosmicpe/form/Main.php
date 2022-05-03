@@ -7,5 +7,4 @@ namespace cosmicpe\form;
 use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase{
-
 }

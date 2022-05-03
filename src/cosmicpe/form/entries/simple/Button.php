@@ -9,11 +9,8 @@ use cosmicpe\form\types\Icon;
 
 final class Button implements FormEntry{
 
-	/** @var string */
-	private $title;
-
-	/** @var Icon|null */
-	private $icon;
+	private string $title;
+	private ?Icon $icon;
 
 	public function __construct(string $title, ?Icon $icon = null){
 		$this->title = $title;

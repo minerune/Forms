@@ -9,14 +9,9 @@ use InvalidArgumentException;
 
 final class InputEntry implements CustomFormEntry, ModifyableEntry{
 
-	/** @var string */
-	private $title;
-
-	/** @var string|null */
-	private $placeholder;
-
-	/** @var string|null */
-	private $default;
+	private string $title;
+	private ?string $placeholder;
+	private ?string $default;
 
 	public function __construct(string $title, ?string $placeholder = null, ?string $default = null){
 		$this->title = $title;
@@ -40,7 +35,7 @@ final class InputEntry implements CustomFormEntry, ModifyableEntry{
 		$this->default = $value;
 	}
 
-	public function validateUserInput($input) : void{
+	public function validateUserInput(mixed $input) : void{
 		if(!is_string($input)){
 			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
 		}

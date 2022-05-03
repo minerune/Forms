@@ -10,8 +10,7 @@ use pocketmine\utils\TextFormat;
 
 abstract class PaginatedForm extends SimpleForm{
 
-	/** @var int */
-	protected $current_page;
+	protected int $current_page;
 
 	public function __construct(string $title, ?string $content = null, int $current_page = 1){
 		parent::__construct($title, $content);

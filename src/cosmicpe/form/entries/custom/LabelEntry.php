@@ -6,8 +6,7 @@ namespace cosmicpe\form\entries\custom;
 
 final class LabelEntry implements CustomFormEntry{
 
-	/** @var string */
-	private $title;
+	private string $title;
 
 	public function __construct(string $title){
 		$this->title = $title;

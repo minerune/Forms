@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace cosmicpe\form\entries\custom;
 
 use cosmicpe\form\entries\ModifyableEntry;
-use Ds\Set;
 use InvalidArgumentException;
 
 final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 
-	/** @var string */
-	private $title;
+	private string $title;
+	/** @var array<string> */
+	private array $options;
+	private int $default = 0;
 
-	/** @var Set<string> */
-	private $options;
-
-	/** @var int */
-	private $default = 0;
-
-	public function __construct(string $title, string ...$options){
+	public function __construct(string $title, array $options){
 		$this->title = $title;
-		$this->options = new Set($options);
+		$this->options = $options;
+	}
+
+	public function getString(int $key) : int{
+		return $this->options[$key];
 	}
 
 	public function getValue() : string{
@@ -32,7 +31,7 @@ final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 		$this->setDefault($value);
 	}
 
-	public function validateUserInput($input) : void{
+	public function validateUserInput(mixed $input) : void{
 		if(!is_int($input) || !isset($this->options[$input])){
 			throw new InvalidArgumentException("Failed to process invalid user input: " . $input);
 		}
@@ -49,7 +48,7 @@ final class DropdownEntry implements CustomFormEntry, ModifyableEntry{
 		throw new InvalidArgumentException("Option \"" . $default_option . "\" does not exist!");
 	}
 
-	public function jsonSerialize() : array {
+	public function jsonSerialize() : array{
 		return [
 			"type" => "dropdown",
 			"text" => $this->title,

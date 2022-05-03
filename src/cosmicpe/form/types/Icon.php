@@ -11,13 +11,10 @@ final class Icon implements JsonSerializable{
 	public const URL = "url";
 	public const PATH = "path";
 
-	/** @var string */
-	private $data;
+	private string $data;
+	private string $type;
 
-	/** @var string */
-	private $type;
-
-	public function __construct(string $data, string $type= self::PATH){
+	public function __construct(string $data, string $type = self::PATH){
 		$this->data = $data;
 		$this->type = $type;
 	}

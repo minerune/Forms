@@ -14,17 +14,12 @@ use pocketmine\player\Player;
 
 abstract class CustomForm implements Form{
 
-	/** @var string */
-	private $title;
-
-	/** @var Icon|null */
-	private $icon;
-
+	private string $title;
+	private ?Icon $icon;
 	/** @var CustomFormEntry[] */
-	private $entries = [];
-
+	private array $entries = [];
 	/** @var Closure[] */
-	private $entry_listeners = [];
+	private array $entry_listeners = [];
 
 	public function __construct(string $title){
 		$this->title = $title;
@@ -36,7 +31,7 @@ abstract class CustomForm implements Form{
 
 	/**
 	 * @param CustomFormEntry $entry
-	 * @param Closure|null $listener
+	 * @param Closure|null    $listener
 	 *
 	 * Listener parameters:
 	 *  * Player $player
