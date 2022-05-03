@@ -15,7 +15,7 @@ use pocketmine\player\Player;
 abstract class CustomForm implements Form{
 
 	private string $title;
-	private ?Icon $icon;
+	private ?Icon $icon = null;
 	/** @var CustomFormEntry[] */
 	private array $entries = [];
 	/** @var Closure[] */
