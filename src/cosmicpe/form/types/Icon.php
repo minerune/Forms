@@ -25,4 +25,12 @@ final class Icon implements JsonSerializable{
 			"data" => $this->data
 		];
 	}
+
+	public static function url(string $url) : Icon{
+		return new Icon($url, self::URL);
+	}
+
+	public static function path(string $path) : Icon{
+		return new Icon($path, self::PATH);
+	}
 }
