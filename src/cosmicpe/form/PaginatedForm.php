@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace cosmicpe\form;
 
 use cosmicpe\form\entries\simple\Button;
+use cosmicpe\form\types\Icon;
 use pocketmine\player\Player;
-use pocketmine\utils\TextFormat;
 
 abstract class PaginatedForm extends SimpleForm{
 
@@ -31,11 +31,11 @@ abstract class PaginatedForm extends SimpleForm{
 	}
 
 	protected function getPreviousButton() : Button{
-		return new Button(TextFormat::BOLD . TextFormat::BLACK . "Previous Page" . TextFormat::RESET . TextFormat::EOL . TextFormat::DARK_GRAY . "Turn to the previous page");
+		return new Button("Предыдущая страница", Icon::path("textures/items/paper"));
 	}
 
 	protected function getNextButton() : Button{
-		return new Button(TextFormat::BOLD . TextFormat::BLACK . "Next Page" . TextFormat::RESET . TextFormat::EOL . TextFormat::DARK_GRAY . "Turn to the next page");
+		return new Button("Следующая страница", Icon::path("textures/items/paper"));
 	}
 
 	abstract protected function getPages() : int;
